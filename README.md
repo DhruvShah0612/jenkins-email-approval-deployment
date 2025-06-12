@@ -29,6 +29,34 @@ Install the following plugins from **Manage Jenkins → Plugin Manager**:
 
 ---
 
+## 🔗 GitHub and Jenkins SSH Connection Setup
+
+To enable **secure push and pull** operations between Jenkins and GitHub via SSH, follow these steps:
+
+---
+
+## ✅ STEP 1: Generate SSH Key on Jenkins Server
+
+```bash
+ssh-keygen -t rsa -b 4096 -m PEM -f ~/.ssh/jenkins_rsa
+cat ~/.ssh/jenkins_rsa.pub
+```
+
+This creates:  
+- **Private Key:** `~/.ssh/jenkins_rsa`  
+- **Public Key:** `~/.ssh/jenkins_rsa.pub`
+
+---
+
+## ✅ STEP 2: Add Public Key to GitHub
+
+1. Go to your GitHub Repository.
+2. Navigate to **Settings → Deploy keys → Add deploy key**.
+3. Paste the contents of `jenkins_rsa.pub`.
+4. Check **"Allow write access"** if using for push.
+
+---
+
 ## 🔑 Global Configuration Steps
 
 ### 📁 Global Trusted Pipeline Libraries
@@ -42,7 +70,11 @@ Install the following plugins from **Manage Jenkins → Plugin Manager**:
   - ID: `github-ssh`  
   - Username: *leave blank or set to git*  
   - Private Key: `Enter directly` → Paste your private SSH key
-
+  - - To get your private key, run:
+      ```bash
+      cat ~/.ssh/jenkins_rsa
+      ```
+      
 ---
 
 ### ✉️ Extended Email Notification
